@@ -1,0 +1,6 @@
+{
+    "hostname": "HOSTNAME",
+    "database": {
+        "url": "DB_URL"
+    }
+}
