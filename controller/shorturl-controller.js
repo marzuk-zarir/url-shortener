@@ -9,7 +9,7 @@ exports.getAllUrl = async (req, res, next) => {
         const user = await User.findById(
             req.user.id,
             '-email -password -__v'
-        ).populate('urls', '-user -long_url -__v')
+        ).populate('urls', '-user -long -__v')
         res.json({
             status: 'success',
             message: 'Get all url successfully',
@@ -22,10 +22,18 @@ exports.getAllUrl = async (req, res, next) => {
 
 exports.postSingleUrl = async (req, res, next) => {
     try {
-        const { url } = await postUrlSchema.validateAsync(req.body)
+        let { url } = await postUrlSchema.validateAsync(req.body)
+
+        // If protocol not provide save with https:// protocol
+        const long =
+            url.startsWith('https') ||
+            url.startsWith('http') ||
+            url.startsWith('ftp')
+                ? url
+                : (url = 'https://' + url)
 
         // Check url is exist or not
-        const isExistUrl = await Url.findOne({ long_url: url })
+        const isExistUrl = await Url.findOne({ long })
         if (isExistUrl) {
             return res.status(400).json({
                 status: 'error',
@@ -40,10 +48,11 @@ exports.postSingleUrl = async (req, res, next) => {
             12
         )
         const shortId = await nanoid()
+
         const shortUrl = new Url({
-            long_url: url,
-            short_url: config.get('hostname') + '/' + shortId,
-            url_code: shortId,
+            long,
+            short: config.get('hostname') + '/' + shortId,
+            code: shortId,
             user: req.user.id
         })
         const saveUrl = await shortUrl.save()
@@ -54,9 +63,9 @@ exports.postSingleUrl = async (req, res, next) => {
             status: 'success',
             message: 'Url shorten successful',
             url: {
-                id: saveUrl.id,
-                short: saveUrl.short_url,
-                code: saveUrl.url_code
+                _id: saveUrl.id,
+                short: saveUrl.short,
+                code: saveUrl.code
             }
         })
     } catch (err) {

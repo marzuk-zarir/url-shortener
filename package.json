@@ -1,17 +1,20 @@
 {
     "name": "url-shortener",
     "version": "1.0.0",
-    "description": "",
+    "description": "User wise url shortener",
     "main": "index.js",
     "scripts": {
-        "start": "cross-env NODE_ENV=production node index",
-        "dev": "nodemon index"
+        "start": "NODE_ENV=production node index",
+        "dev": "nodemon index --ext js,html --ignore public",
+        "watch": "webpack watch --mode=development",
+        "serve": "npm run watch & npm run dev",
+        "build:dev": "webpack build --mode=development",
+        "build": "webpack build --mode=production"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "axios": "^0.23.0",
         "bcrypt": "^5.0.1",
         "config": "^3.3.6",
         "dotenv": "^10.0.0",
@@ -21,12 +24,5 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.0.11",
         "nanoid": "^3.1.30"
-    },
-    "devDependencies": {
-        "cross-env": "^7.0.3",
-        "css-loader": "^6.4.0",
-        "mini-css-extract-plugin": "^2.4.2",
-        "webpack": "^5.59.1",
-        "webpack-cli": "^4.9.1"
     }
 }

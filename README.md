@@ -1,6 +1,6 @@
-# URL Shortener
+# URL Shortener Api
 
-User wise url shortener. User can sign up with username and email address. Login with their username and password then add or remove their shorten url link. All created url is public 😌
+User wise url shortener api. User can sign up with username and email address. Login with their username and password then add or remove their shorten url link. All created url is public 😌
 
 # How to run:
 
@@ -62,12 +62,6 @@ Server:
 -   Joi
 -   Config
 -   Dotenv
-
-Client:
-
--   Axios
--   Bootstrap 5
--   Webpack
 
 ## Contact
 

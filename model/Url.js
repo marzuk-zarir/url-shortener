@@ -1,16 +1,16 @@
 const { Schema, model, SchemaTypes } = require('mongoose')
 
 const urlSchema = new Schema({
-    short_url: {
+    short: {
         type: String,
         length: 15,
         required: true
     },
-    long_url: {
+    long: {
         type: String,
         required: true
     },
-    url_code: {
+    code: {
         type: String,
         length: 12,
         required: true
